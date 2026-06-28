@@ -29,6 +29,15 @@
   header.hd h1{font-family:"Noto Serif TC",serif;font-weight:500;font-size:22px;letter-spacing:.05em;margin-top:18px;position:relative;}
   header.hd p{color:var(--ink-soft);font-size:14px;max-width:520px;margin:12px auto 0;line-height:1.95;position:relative;}
 
+  /* 前導：已定的方向 */
+  .frame{background:var(--cream);border:1px solid var(--cream-2);border-radius:16px;padding:22px 22px 20px;margin:8px 0 2px;}
+  .frame .fl{font-family:"Forum",serif;font-style:italic;letter-spacing:.1em;color:var(--gold-deep);font-size:13px;}
+  .frame .ft{font-family:"Noto Serif TC",serif;font-size:17px;font-weight:600;letter-spacing:.04em;margin:3px 0 15px;}
+  .frame ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
+  .frame li{position:relative;padding-left:20px;font-size:13.5px;color:var(--ink-soft);line-height:1.9;}
+  .frame li::before{content:"";position:absolute;left:0;top:10px;width:7px;height:7px;border-radius:50%;background:var(--gold);}
+  .frame li b{color:var(--ink);font-weight:600;}
+
   /* progress */
   .prog{position:sticky;top:0;z-index:40;background:rgba(251,248,242,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--cream-2);padding:11px 20px;}
   .prog .in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;}
@@ -119,6 +128,19 @@
   <h1 class="serif">選出你最想拍的 8 支影片</h1>
   <p>這裡有 16 個方向。點一下卡片就選起來，想說的話可以寫在每支下面。<br>建議挑 3 教學、3 分享、2 陪伴，但跟著你的直覺走就好。</p>
 </header>
+
+<div class="wrap">
+  <div class="frame">
+    <div class="fl">The Direction</div>
+    <div class="ft serif">開拍前，我們先說好的調性</div>
+    <ul>
+      <li><b>你本人出鏡、第一人稱</b>，溫暖、緩慢，像朋友陪你說話。</li>
+      <li>畫面氛圍對標 <b>choki／naminokurashi</b>（低彩度、柔光、慢剪、環境音），但配上你的療癒系口白，<b>不走無聲路線</b>。</li>
+      <li>每支約 <b>8–12 分鐘</b>。前期先用「會說話」的影片建立信任，氛圍重的陪伴型排中後段。</li>
+      <li>軟性<b>導流到實體 SPA 空間</b>，不硬推。</li>
+    </ul>
+  </div>
+</div>
 
 <div class="prog">
   <div class="in">
