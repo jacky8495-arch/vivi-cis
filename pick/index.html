@@ -92,9 +92,12 @@
   .modal textarea{width:100%;border:1px solid var(--cream-2);border-radius:11px;background:#fff;padding:14px;font-family:inherit;font-size:13.5px;color:var(--ink);line-height:1.85;min-height:220px;resize:vertical;}
   .modal .row{display:flex;gap:11px;margin-top:16px;flex-wrap:wrap;}
   .modal .row button{flex:1;border:none;border-radius:30px;padding:13px 18px;font-family:"Noto Serif TC",serif;font-size:14.5px;font-weight:500;letter-spacing:.05em;cursor:pointer;min-width:130px;}
-  .modal .copy{background:var(--gold-deep);color:#fff;}
-  .modal .copy.done{background:var(--t1);}
+  .modal .send{background:var(--ink);color:#fff;}
+  .modal .send.done{background:var(--t1);}
+  .modal .send:disabled{opacity:.55;cursor:default;}
   .modal .close{background:var(--cream-2);color:var(--ink-soft);}
+  .modal .copybak{display:block;width:100%;margin-top:12px;background:none;border:none;color:var(--gold-deep);font-family:"Noto Sans TC",sans-serif;font-size:13px;cursor:pointer;text-decoration:underline;text-underline-offset:3px;letter-spacing:.03em;}
+  .modal .copybak.done{color:var(--t1);text-decoration:none;}
   .modal .hint{font-size:12px;color:var(--taupe-deep);margin-top:13px;line-height:1.8;text-align:center;}
 
   footer.ft{text-align:center;padding:30px 20px 10px;color:var(--taupe-deep);font-size:11.5px;letter-spacing:.04em;}
@@ -150,13 +153,14 @@
 <div class="mask" id="mask">
   <div class="modal">
     <h3 class="serif">這是你的選擇</h3>
-    <div class="mp">確認沒問題後，按「複製」，再貼到 LINE 傳給謙謙影像就完成了。</div>
+    <div class="mp">確認沒問題後，按「送出給謙謙影像」就完成了。</div>
     <textarea id="out" readonly></textarea>
     <div class="row">
-      <button class="copy" id="copy">複製到剪貼簿</button>
+      <button class="send" id="send">送出給謙謙影像</button>
       <button class="close" id="close">繼續修改</button>
     </div>
-    <div class="hint">複製後打開 LINE，長按貼上傳給謙謙影像即可</div>
+    <button class="copybak" id="copy">或：複製到 LINE 自己傳（備用）</button>
+    <div class="hint" id="hint">按「送出」就會直接傳到謙謙影像那邊，不用再做別的</div>
   </div>
 </div>
 
@@ -255,22 +259,55 @@
     if(all) s+='\n\n整體想說的：\n'+all;
     return s;
   }
+  const ENDPOINT='https://script.google.com/macros/s/AKfycbwHcm4yX5hIpCOE2qHvD_AXh9gHDHqs8i0mNmvvbsIIS8fg91xtIdMnqWGm54fZzLC6/exec';
+  function buildPayload(){
+    const picks=DATA.filter(d=>sel.has(d.n)).sort((a,b)=>a.t-b.t||a.n-b.n);
+    const c={1:0,2:0,3:0}; picks.forEach(d=>c[d.t]++);
+    return {
+      total:picks.length, t1:c[1], t2:c[2], t3:c[3],
+      picks:picks.map(d=>'['+TNAME[d.t]+'] '+d.n+'. '+d.ti).join('\n'),
+      comments:picks.filter(d=>cmt[d.n]&&cmt[d.n].trim()).map(d=>d.n+'. '+d.ti+' → '+cmt[d.n].trim()).join('\n'),
+      overall:document.getElementById('overall').value.trim()
+    };
+  }
+
   const mask=document.getElementById('mask');
+  const sendBtn=document.getElementById('send');
+  const hint=document.getElementById('hint');
+  let sent=false;
+  function resetSend(){sent=false;sendBtn.disabled=false;sendBtn.textContent='送出給謙謙影像';sendBtn.classList.remove('done');hint.textContent='按「送出」就會直接傳到謙謙影像那邊，不用再做別的';}
+
   document.getElementById('gen').addEventListener('click',()=>{
     if(sel.size===0){alert('還沒選任何一支喔，點一下卡片就會選起來');return;}
     document.getElementById('out').value=build();
+    resetSend();
     mask.classList.add('open');
   });
   document.getElementById('close').addEventListener('click',()=>mask.classList.remove('open'));
   mask.addEventListener('click',e=>{if(e.target===mask)mask.classList.remove('open');});
+
+  sendBtn.addEventListener('click',async()=>{
+    if(sent)return;
+    sendBtn.disabled=true; sendBtn.textContent='送出中…';
+    try{
+      await fetch(ENDPOINT,{method:'POST',mode:'no-cors',body:JSON.stringify(buildPayload())});
+      sent=true;
+      sendBtn.textContent='已送出，謝謝你！'; sendBtn.classList.add('done');
+      hint.textContent='收到了，謙謙影像會看到你的選擇，可以關掉這個視窗了。';
+    }catch(_){
+      sendBtn.disabled=false; sendBtn.textContent='送出失敗，再試一次';
+      hint.textContent='網路好像不太穩，再按一次；或用下面「複製到 LINE」傳給謙謙影像。';
+    }
+  });
+
   const copyBtn=document.getElementById('copy');
   copyBtn.addEventListener('click',async()=>{
     const t=document.getElementById('out');
     try{ await navigator.clipboard.writeText(t.value); }
     catch(_){ t.removeAttribute('readonly'); t.select(); document.execCommand('copy'); t.setAttribute('readonly','');}
-    copyBtn.textContent='已複製，去 LINE 貼上吧';
+    copyBtn.textContent='已複製，去 LINE 貼上傳給謙謙影像';
     copyBtn.classList.add('done');
-    setTimeout(()=>{copyBtn.textContent='複製到剪貼簿';copyBtn.classList.remove('done');},2600);
+    setTimeout(()=>{copyBtn.textContent='或：複製到 LINE 自己傳（備用）';copyBtn.classList.remove('done');},2600);
   });
 
   refresh();
