@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>微·Breathe｜影片選題</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700&family=Forum&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --taupe:#9D9184; --taupe-deep:#827667; --ink:#2A2622; --ink-soft:#4A443D;
+    --gold:#C2A36B; --gold-deep:#A88643; --gold-soft:#DcC8A2;
+    --cream:#F3EEE5; --cream-2:#ECE4D6; --paper:#FBF8F2;
+    --t1:#7A9A6E; /* 教學 苔綠 */ --t2:#6E97AE; /* 分享 霧藍 */ --t3:#8C7099; /* 陪伴 紫藕 */
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper);color:var(--ink);font-family:"Noto Sans TC",sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased;padding-bottom:96px;overflow-x:hidden;}
+  .serif{font-family:"Noto Serif TC",serif;}
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px;}
+
+  /* hero */
+  header.hd{position:relative;text-align:center;padding:54px 20px 30px;overflow:hidden;}
+  header.hd .mk{position:absolute;right:-6%;top:-30%;font-family:"Noto Serif TC",serif;font-size:280px;color:var(--ink);opacity:.035;line-height:1;pointer-events:none;user-select:none;}
+  header.hd .logo{font-family:"Noto Serif TC",serif;font-weight:500;font-size:26px;letter-spacing:.06em;position:relative;}
+  header.hd .logo b{color:var(--gold-deep);font-weight:500;}
+  header.hd .ey{font-family:"Forum",serif;font-style:italic;letter-spacing:.14em;color:var(--gold-deep);font-size:13px;margin-top:10px;position:relative;}
+  header.hd h1{font-family:"Noto Serif TC",serif;font-weight:500;font-size:22px;letter-spacing:.05em;margin-top:18px;position:relative;}
+  header.hd p{color:var(--ink-soft);font-size:14px;max-width:520px;margin:12px auto 0;line-height:1.95;position:relative;}
+
+  /* progress */
+  .prog{position:sticky;top:0;z-index:40;background:rgba(251,248,242,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--cream-2);padding:11px 20px;}
+  .prog .in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;}
+  .prog .tot{font-family:"Noto Serif TC",serif;font-size:15px;font-weight:500;letter-spacing:.03em;}
+  .prog .tot b{color:var(--gold-deep);font-size:19px;}
+  .prog .pills{display:flex;gap:7px;}
+  .prog .pill{font-size:11.5px;letter-spacing:.04em;color:var(--taupe-deep);background:var(--cream);border:1px solid var(--cream-2);border-radius:20px;padding:3px 11px;}
+  .prog .pill b{font-weight:700;}
+  .prog .pill.t1 b{color:var(--t1);} .prog .pill.t2 b{color:var(--t2);} .prog .pill.t3 b{color:var(--t3);}
+
+  /* section */
+  .grp{margin-top:40px;}
+  .grp .gh{display:flex;align-items:baseline;gap:11px;margin-bottom:6px;}
+  .grp .gh .dot{width:9px;height:9px;border-radius:50%;}
+  .grp.g1 .dot{background:var(--t1);} .grp.g2 .dot{background:var(--t2);} .grp.g3 .dot{background:var(--t3);}
+  .grp .gh .nm{font-family:"Noto Serif TC",serif;font-size:19px;font-weight:600;letter-spacing:.05em;}
+  .grp .gh .sub{font-size:12px;color:var(--taupe-deep);margin-left:auto;}
+  .grp .glead{font-size:12.5px;color:var(--taupe-deep);margin-bottom:16px;}
+
+  /* card */
+  .card{position:relative;background:#fff;border:1px solid var(--cream-2);border-radius:14px;padding:17px 17px 15px 48px;margin-bottom:13px;transition:border-color .2s,box-shadow .2s,background .2s;cursor:pointer;}
+  .card:hover{box-shadow:0 10px 28px -20px rgba(42,38,34,.5);}
+  .card.on{background:linear-gradient(180deg,#fff,var(--paper));border-color:var(--gold);box-shadow:0 12px 30px -18px rgba(168,134,67,.5);}
+  .card .tick{position:absolute;left:15px;top:17px;width:22px;height:22px;border-radius:50%;border:1.6px solid var(--taupe);display:flex;align-items:center;justify-content:center;transition:all .2s;background:#fff;}
+  .card.on .tick{background:var(--gold-deep);border-color:var(--gold-deep);}
+  .card .tick svg{width:13px;height:13px;stroke:#fff;stroke-width:2.6;fill:none;opacity:0;transition:opacity .2s;}
+  .card.on .tick svg{opacity:1;}
+  .card .num{position:absolute;left:14px;top:44px;font-family:"Forum",serif;font-size:12px;color:var(--taupe-deep);width:24px;text-align:center;}
+  .card .ti{font-family:"Noto Serif TC",serif;font-size:16.5px;font-weight:600;letter-spacing:.02em;line-height:1.5;}
+  .card .ds{font-size:13px;color:var(--ink-soft);margin-top:5px;line-height:1.75;}
+  .card .hk{font-size:12.5px;color:var(--taupe-deep);margin-top:6px;}
+  .card .hk b{color:var(--gold-deep);font-weight:500;font-style:italic;font-family:"Forum","Noto Serif TC",serif;}
+  .card .nt{font-size:11.5px;color:var(--taupe);margin-top:7px;padding-top:7px;border-top:1px dashed var(--cream-2);}
+  .card .cmt{margin-top:11px;}
+  .card .cmt textarea{width:100%;border:1px solid var(--cream-2);border-radius:9px;background:var(--paper);padding:9px 11px;font-family:inherit;font-size:13px;color:var(--ink);resize:vertical;min-height:38px;line-height:1.6;}
+  .card .cmt textarea:focus{outline:none;border-color:var(--gold);background:#fff;}
+  .card .cmt .cl{font-size:11px;color:var(--taupe-deep);margin-bottom:5px;letter-spacing:.04em;}
+
+  /* overall comment */
+  .overall{margin-top:38px;background:var(--cream);border-radius:14px;padding:20px;}
+  .overall .cl{font-family:"Noto Serif TC",serif;font-size:15px;font-weight:600;margin-bottom:4px;}
+  .overall .cs{font-size:12px;color:var(--taupe-deep);margin-bottom:11px;}
+  .overall textarea{width:100%;border:1px solid var(--cream-2);border-radius:9px;background:var(--paper);padding:11px 13px;font-family:inherit;font-size:13.5px;color:var(--ink);resize:vertical;min-height:64px;line-height:1.7;}
+  .overall textarea:focus{outline:none;border-color:var(--gold);background:#fff;}
+
+  /* footer bar */
+  .bar{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(251,248,242,.94);backdrop-filter:blur(14px);border-top:1px solid var(--cream-2);padding:13px 20px;}
+  .bar .in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:14px;}
+  .bar .cnt{font-size:13px;color:var(--ink-soft);}
+  .bar .cnt b{font-family:"Noto Serif TC",serif;color:var(--gold-deep);font-size:17px;}
+  .bar .btn{margin-left:auto;background:var(--ink);color:var(--cream);border:none;border-radius:30px;padding:12px 24px;font-family:"Noto Serif TC",serif;font-size:14.5px;font-weight:500;letter-spacing:.06em;cursor:pointer;transition:background .2s;white-space:nowrap;}
+  .bar .btn:hover{background:#000;}
+  .bar .btn:disabled{background:var(--taupe);cursor:not-allowed;opacity:.6;}
+
+  /* modal */
+  .mask{position:fixed;inset:0;z-index:80;background:rgba(42,38,34,.5);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:20px;}
+  .mask.open{display:flex;}
+  .modal{background:var(--paper);border-radius:18px;max-width:560px;width:100%;max-height:86vh;overflow:auto;padding:26px 24px;box-shadow:0 30px 80px -30px rgba(42,38,34,.7);}
+  .modal h3{font-family:"Noto Serif TC",serif;font-size:20px;font-weight:600;letter-spacing:.04em;margin-bottom:4px;}
+  .modal .mp{font-size:13px;color:var(--ink-soft);margin-bottom:15px;line-height:1.8;}
+  .modal textarea{width:100%;border:1px solid var(--cream-2);border-radius:11px;background:#fff;padding:14px;font-family:inherit;font-size:13.5px;color:var(--ink);line-height:1.85;min-height:220px;resize:vertical;}
+  .modal .row{display:flex;gap:11px;margin-top:16px;flex-wrap:wrap;}
+  .modal .row button{flex:1;border:none;border-radius:30px;padding:13px 18px;font-family:"Noto Serif TC",serif;font-size:14.5px;font-weight:500;letter-spacing:.05em;cursor:pointer;min-width:130px;}
+  .modal .copy{background:var(--gold-deep);color:#fff;}
+  .modal .copy.done{background:var(--t1);}
+  .modal .close{background:var(--cream-2);color:var(--ink-soft);}
+  .modal .hint{font-size:12px;color:var(--taupe-deep);margin-top:13px;line-height:1.8;text-align:center;}
+
+  footer.ft{text-align:center;padding:30px 20px 10px;color:var(--taupe-deep);font-size:11.5px;letter-spacing:.04em;}
+  footer.ft b{color:var(--gold-deep);}
+
+  @media(max-width:560px){
+    header.hd .mk{font-size:200px;}
+    .card{padding:16px 14px 14px 44px;}
+    .bar .btn{padding:11px 18px;font-size:13.5px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hd">
+  <div class="mk serif">微</div>
+  <div class="logo serif">微·<b>Breathe</b></div>
+  <div class="ey">Pick Your Stories</div>
+  <h1 class="serif">選出你最想拍的 8 支影片</h1>
+  <p>這裡有 16 個方向。點一下卡片就選起來，想說的話可以寫在每支下面。<br>建議挑 3 教學、3 分享、2 陪伴，但跟著你的直覺走就好。</p>
+</header>
+
+<div class="prog">
+  <div class="in">
+    <div class="tot">已選 <b id="ptot">0</b> ／ 8</div>
+    <div class="pills">
+      <span class="pill t1">教學 <b id="pt1">0</b>/3</span>
+      <span class="pill t2">分享 <b id="pt2">0</b>/3</span>
+      <span class="pill t3">陪伴 <b id="pt3">0</b>/2</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap" id="app"></div>
+
+<div class="wrap">
+  <div class="overall">
+    <div class="cl serif">還有什麼想說的？</div>
+    <div class="cs">對整體方向的想法、想加的主題、或任何建議，都可以寫在這</div>
+    <textarea id="overall" placeholder="例如：我想多一點分享型的、或我有一個自己的點子想拍……"></textarea>
+  </div>
+</div>
+
+<footer class="ft">微·<b>Breathe</b> ｜ YouTube 影片選題 ｜ 謙謙影像 製作</footer>
+
+<div class="bar">
+  <div class="in">
+    <div class="cnt">已選 <b id="btot">0</b> 支</div>
+    <button class="btn" id="gen">產生我的選擇</button>
+  </div>
+</div>
+
+<div class="mask" id="mask">
+  <div class="modal">
+    <h3 class="serif">這是你的選擇</h3>
+    <div class="mp">確認沒問題後，按「複製」，再貼到 LINE 傳給謙謙影像就完成了。</div>
+    <textarea id="out" readonly></textarea>
+    <div class="row">
+      <button class="copy" id="copy">複製到剪貼簿</button>
+      <button class="close" id="close">繼續修改</button>
+    </div>
+    <div class="hint">複製後打開 LINE，長按貼上傳給謙謙影像即可</div>
+  </div>
+</div>
+
+<script>
+  const DATA = [
+    {n:2, t:1, ti:"睡不好，先從這一支精油開始", ds:"助眠精油入門，搭配睡前 3 分鐘小儀式。", hk:"如果你也常常躺著，卻睡不著……", nt:"好搜尋、實用，自然帶到空間的助眠療程"},
+    {n:5, t:1, ti:"肩頸好緊？在家就能做的 3 個放鬆手法", ds:"自我按摩與穴位示範，看完馬上能用。", hk:"整天看手機，你的肩膀是不是早就……", nt:"導流到空間的深層按摩"},
+    {n:8, t:1, ti:"精油怎麼挑、怎麼用才不踩雷", ds:"新手選購與使用指南（擴香／按摩／濃度）。", hk:"市面上百百種，到底要怎麼選……", nt:"長尾搜尋常青片，導流空間客製調香"},
+    {n:10, t:1, ti:"工作壓力大？桌上 30 秒香氛急救", ds:"上班族隨手可做的情緒急救。", hk:"開會開到快斷氣的時候……", nt:"受眾廣、易擴散"},
+    {n:13, t:1, ti:"在家泡一次 SPA 級的精油浴", ds:"居家泡澡的精油配方與步驟。", hk:"不用花錢出門，今晚在家就能……", nt:"把居家體驗連到空間的進階療程"},
+    {n:16, t:1, ti:"換季情緒低落，用香氣照顧自己", ds:"季節轉換的身心舒緩與對應精油。", hk:"每到天氣一變，你是不是也……", nt:"節氣型，可固定每季出一支"},
+
+    {n:1, t:2, ti:"我是 Vivi，和「微·Breathe」的由來", ds:"自我介紹＋品牌故事（收音機、孤單、想成為某人的陪伴）。", hk:"你有多久，沒有好好對待自己了？", nt:"建立人設、最強連結，適合開頻第一支"},
+    {n:3, t:2, ti:"What's in my bag：一個芳療師的包包", ds:"隨身香氛小物＋為什麼帶它們，輕鬆人設。", hk:"直接翻包，邊翻邊聊。", nt:"需要你的真實包包內容"},
+    {n:6, t:2, ti:"My morning routine：我一天的開始", ds:"早晨儀式（精油、一杯茶、呼吸），生活感。", hk:"清晨空鏡＋起床的畫面。", nt:"需要你真實的早晨流程"},
+    {n:9, t:2, ti:"我怎麼走上芳療這條路", ds:"轉行或契機的個人故事，建立深度信任。", hk:"其實我本來，根本不是做這個的……", nt:"需要你的真實經歷"},
+    {n:12, t:2, ti:"A day in my life：空間營業的一天", ds:"芳療師幕後的一天，順勢帶出 SPA 空間。", hk:"清晨拉開空間門的畫面。", nt:"導流最強，需空間細節到位"},
+    {n:14, t:2, ti:"Q&A：你們最常問我的 10 個問題", ds:"回應觀眾常見疑問，拉近距離。", hk:"直接念出第一則留言。", nt:"需累積觀眾提問，適合中後期"},
+
+    {n:4, t:3, ti:"跟我一起，做一次 5 分鐘深呼吸", ds:"引導式呼吸／睡前放鬆，氛圍畫面＋療癒旁白。", hk:"5–10 秒空鏡與呼吸聲，再輕聲開口。", nt:"呼應頻道結尾「一起深呼吸」"},
+    {n:7, t:3, ti:"手寫給自己：把腦中的雜訊放下", ds:"手寫關於自己的事，再圈出文章裡認同、鼓勵自己的字。", hk:"一張白紙、一支筆的特寫＋旁白。", nt:"你們之前討論過的點子"},
+    {n:11, t:3, ti:"一個人的雨天，陪你待著", ds:"雨聲＋空間畫面＋輕旁白，naminokurashi 那種氛圍。", hk:"5–10 秒雨聲空鏡，再輕聲開口。", nt:"氛圍重，建議觀眾熟悉你之後再放"},
+    {n:15, t:3, ti:"睡前 ASMR：精油開封與按摩聲", ds:"開瓶聲、推拿聲、低語旁白，choki 那種 ASMR 感。", hk:"純聲音＋特寫，幾乎只低語。", nt:"氛圍最重的一支"},
+  ];
+  const TYPES = {1:{nm:"教學型",sub:"知識實用，好被搜尋",lead:"每支講一個芳療主題，看完能用。共 6 支，建議選 3。"},
+                 2:{nm:"分享型",sub:"人設與生活，拉近距離",lead:"讓觀眾認識你、信任你。共 6 支，建議選 3。"},
+                 3:{nm:"陪伴型",sub:"氛圍與療癒，慢下來",lead:"像帶觀眾做一次小小的放鬆。共 4 支，建議選 2。"}};
+  const TNAME={1:"教學",2:"分享",3:"陪伴"};
+
+  const KEY="viviPickV1";
+  let state = JSON.parse(localStorage.getItem(KEY)||'{"sel":[],"cmt":{},"all":""}');
+  const sel = new Set(state.sel||[]);
+  const cmt = state.cmt||{};
+
+  const app=document.getElementById('app');
+  [1,2,3].forEach(t=>{
+    const g=document.createElement('div');
+    g.className='grp g'+t;
+    g.innerHTML='<div class="gh"><span class="dot"></span><span class="nm serif">'+TYPES[t].nm+'</span><span class="sub">'+TYPES[t].sub+'</span></div><div class="glead">'+TYPES[t].lead+'</div>';
+    DATA.filter(d=>d.t===t).forEach(d=>{
+      const c=document.createElement('div');
+      c.className='card'+(sel.has(d.n)?' on':'');
+      c.dataset.n=d.n; c.dataset.t=t;
+      c.innerHTML='<div class="tick"><svg viewBox="0 0 24 24"><polyline points="4,12 10,18 20,6"/></svg></div>'
+        +'<div class="num">'+String(d.n).padStart(2,'0')+'</div>'
+        +'<div class="ti serif">'+d.ti+'</div>'
+        +'<div class="ds">'+d.ds+'</div>'
+        +'<div class="hk">開場：<b>'+d.hk+'</b></div>'
+        +'<div class="nt">'+d.nt+'</div>'
+        +'<div class="cmt"><div class="cl">想對這支說的話（選填）</div><textarea data-n="'+d.n+'" placeholder="例如：這支我超想拍／可以改成…">'+(cmt[d.n]||'')+'</textarea></div>';
+      g.appendChild(c);
+    });
+    app.appendChild(g);
+  });
+  document.getElementById('overall').value = state.all||'';
+
+  function save(){ localStorage.setItem(KEY, JSON.stringify({sel:[...sel],cmt,all:document.getElementById('overall').value})); }
+  function refresh(){
+    const c={1:0,2:0,3:0};
+    sel.forEach(n=>{const d=DATA.find(x=>x.n===n); if(d)c[d.t]++;});
+    const tot=sel.size;
+    document.getElementById('ptot').textContent=tot;
+    document.getElementById('btot').textContent=tot;
+    document.getElementById('pt1').textContent=c[1];
+    document.getElementById('pt2').textContent=c[2];
+    document.getElementById('pt3').textContent=c[3];
+  }
+
+  // 點卡片切換選取（但點到留言框不切換）
+  app.addEventListener('click',e=>{
+    if(e.target.closest('textarea')) return;
+    const card=e.target.closest('.card'); if(!card)return;
+    const n=+card.dataset.n;
+    if(sel.has(n)){sel.delete(n);card.classList.remove('on');}
+    else{sel.add(n);card.classList.add('on');}
+    save();refresh();
+  });
+  // 留言
+  app.addEventListener('input',e=>{
+    if(e.target.tagName==='TEXTAREA'){const n=e.target.dataset.n; cmt[n]=e.target.value; save();}
+  });
+  document.getElementById('overall').addEventListener('input',save);
+
+  // 產生結果
+  function build(){
+    const picks=DATA.filter(d=>sel.has(d.n)).sort((a,b)=>a.t-b.t||a.n-b.n);
+    let s='微·Breathe 影片選片結果\n';
+    s+='我選了這 '+picks.length+' 支：\n\n';
+    picks.forEach(d=>{
+      s+='['+TNAME[d.t]+'] '+d.n+'. '+d.ti+'\n';
+      if(cmt[d.n]&&cmt[d.n].trim()) s+='   留言：'+cmt[d.n].trim()+'\n';
+    });
+    const c={1:0,2:0,3:0}; picks.forEach(d=>c[d.t]++);
+    s+='\n（教學 '+c[1]+'／分享 '+c[2]+'／陪伴 '+c[3]+'）';
+    const all=document.getElementById('overall').value.trim();
+    if(all) s+='\n\n整體想說的：\n'+all;
+    return s;
+  }
+  const mask=document.getElementById('mask');
+  document.getElementById('gen').addEventListener('click',()=>{
+    if(sel.size===0){alert('還沒選任何一支喔，點一下卡片就會選起來');return;}
+    document.getElementById('out').value=build();
+    mask.classList.add('open');
+  });
+  document.getElementById('close').addEventListener('click',()=>mask.classList.remove('open'));
+  mask.addEventListener('click',e=>{if(e.target===mask)mask.classList.remove('open');});
+  const copyBtn=document.getElementById('copy');
+  copyBtn.addEventListener('click',async()=>{
+    const t=document.getElementById('out');
+    try{ await navigator.clipboard.writeText(t.value); }
+    catch(_){ t.removeAttribute('readonly'); t.select(); document.execCommand('copy'); t.setAttribute('readonly','');}
+    copyBtn.textContent='已複製，去 LINE 貼上吧';
+    copyBtn.classList.add('done');
+    setTimeout(()=>{copyBtn.textContent='複製到剪貼簿';copyBtn.classList.remove('done');},2600);
+  });
+
+  refresh();
+</script>
+</body>
+</html>
