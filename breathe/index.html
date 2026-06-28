@@ -121,6 +121,14 @@
   .banner .txtag{position:absolute;left:50%;top:66%;transform:translateX(-50%);font-size:.9cqw;letter-spacing:.1em;color:var(--gold-soft);background:rgba(42,38,34,.4);padding:.4cqw 1.2cqw;border-radius:20px;white-space:nowrap;}
   .blegend{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin-top:20px;font-size:12px;color:var(--taupe-deep);}
   .blegend i{display:inline-block;width:20px;border-top:1.4px dashed;vertical-align:middle;margin-right:7px;}
+  .chid{display:flex;align-items:center;gap:30px;margin-top:42px;padding-top:36px;border-top:1px solid var(--cream-2);flex-wrap:wrap;}
+  .chid .av{width:132px;height:132px;border-radius:50%;overflow:hidden;box-shadow:0 14px 34px -16px rgba(42,38,34,.6),0 0 0 1px rgba(216,200,162,.25);flex-shrink:0;}
+  .chid .av img{width:100%;height:100%;object-fit:cover;display:block;}
+  .chid .meta .lb{font-family:"Forum",serif;font-style:italic;font-size:14px;letter-spacing:.1em;color:var(--gold-deep);margin-bottom:7px;}
+  .chid .meta .nm{font-family:"Noto Serif TC",serif;font-size:25px;font-weight:500;letter-spacing:.06em;}
+  .chid .meta .hd{font-size:13px;color:var(--taupe-deep);margin-top:5px;letter-spacing:.04em;}
+  .chid .meta .cap{font-size:12.5px;color:var(--ink-soft);margin-top:11px;line-height:1.7;max-width:330px;}
+  @media(max-width:680px){.chid{gap:18px;}.chid .av{width:100px;height:100px;}.chid .meta .nm{font-size:21px;}}
 
   /* covers */
   .covers{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
@@ -392,6 +400,15 @@
       <div class="txtag">文字與 Logo 安全範圍 1546 × 423（全裝置可見）</div>
     </div>
     <div class="blegend"><span><i style="border-color:rgba(150,140,125,.8)"></i>電視最大顯示</span><span><i style="border-color:var(--gold)"></i>文字安全區（核心訊息）</span></div>
+    <div class="chid">
+      <div class="av"><img src="avatar_channel.png" alt="微·Breathe 頻道頭像"></div>
+      <div class="meta">
+        <div class="lb">Channel Avatar</div>
+        <div class="nm">微·Breathe</div>
+        <div class="hd">@vivi.breathe　·　頻道頭像</div>
+        <div class="cap">以單字「微」印章置中，墨黑底配米白字；裁成圓形後仍清晰，小尺寸辨識度高。</div>
+      </div>
+    </div>
   </div>
 </section>
 
